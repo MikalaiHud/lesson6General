@@ -8,9 +8,7 @@ public class AnimeShop {
     private String shopAddress;
     private int numberOfToys;
     private int toyPrice;
-    //private AnimeToy[] animeToys = new AnimeToy[10];
     private ArrayList<com.epam.hud.entity.AnimeToy> animeToys = new ArrayList<>();
-    //private int tempNumber = 0;
     public String getShopName() {
         return shopName;
     }
@@ -45,7 +43,6 @@ public class AnimeShop {
 
     public ArrayList<com.epam.hud.entity.AnimeToy> getAnimeToys() {
         return animeToys;
-        //return animeToys.get(animeToys);
     }
 
     public void setAnimeToys(ArrayList<com.epam.hud.entity.AnimeToy> animeToys) {
@@ -58,10 +55,6 @@ public class AnimeShop {
 
 
     public void addToy(com.epam.hud.entity.AnimeToy animeToy) {
-        /*int tempNumber1 = getTempNumber();
-        animeToys[tempNumber1] = animeToy;
-        tempNumber1++;
-        setTempNumber(tempNumber1);*/
         animeToys.add(animeToy);
     }
 
