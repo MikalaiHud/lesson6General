@@ -1,4 +1,4 @@
-package java.main.com.epam.hud.logic;
+package com.epam.hud.entity;
 
 public class AnimeToy {
     private String toyType;

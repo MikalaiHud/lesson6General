@@ -1,8 +1,8 @@
-package java.main.com.epam.hud.entity;
+package com.epam.hud.logic;
 
-import java.main.com.epam.hud.logic.AnimeShop;
-import java.main.com.epam.hud.logic.AnimeToy;
-import java.main.com.epam.hud.logic.GeneralException;
+import com.epam.hud.entity.AnimeToy;
+import com.epam.hud.exception.GeneralException;
+import com.epam.hud.entity.AnimeShop;
 import java.util.ArrayList;
 
 public class ShopContainer {

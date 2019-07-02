@@ -1,9 +1,11 @@
-package java.main.com.epam.hud;
+package com.epam.hud;
 
-import java.main.com.epam.hud.entity.ShopContainer;
-import java.main.com.epam.hud.logic.AnimeShop;
-import java.main.com.epam.hud.logic.AnimeToy;
-import java.main.com.epam.hud.logic.GeneralException;
+
+import com.epam.hud.entity.AnimeToy;
+import com.epam.hud.exception.GeneralException;
+
+import com.epam.hud.entity.AnimeShop;
+import com.epam.hud.logic.ShopContainer;
 
 /**
  * 1. В текущей программе заменить массивы на ArrayList
@@ -16,6 +18,15 @@ import java.main.com.epam.hud.logic.GeneralException;
  * 5. Добавить структуру пакетов. (java/main/com.....)
  * logic, entity
  * 6. Удалить пакет example
+ */
+
+/**
+ * 1. Исправить пакеты(первая строчка программы)
+ * 2. Разложить по пакетам. logic и entity поменять местами.
+ * 3. Создать пакет exception  для класса GeneralException.
+ * 4. Проверить что программа работает корректно.
+ * 5. Удалить комментарии
+ * 6. git add, git commit -'comment', git push, pull request. Добавить меня в колабораторы.
  */
 
 public class Main {

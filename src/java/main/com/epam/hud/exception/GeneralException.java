@@ -1,4 +1,4 @@
-package java.main.com.epam.hud.logic;
+package com.epam.hud.exception;
 
 public class GeneralException extends Exception {
     private String message;

@@ -1,6 +1,7 @@
-package java.main.com.epam.hud.logic;
+package com.epam.hud.entity;
 
 import java.util.ArrayList;
+
 
 public class AnimeShop {
     private String shopName;
@@ -8,7 +9,7 @@ public class AnimeShop {
     private int numberOfToys;
     private int toyPrice;
     //private AnimeToy[] animeToys = new AnimeToy[10];
-    private ArrayList<AnimeToy> animeToys = new ArrayList<>();
+    private ArrayList<com.epam.hud.entity.AnimeToy> animeToys = new ArrayList<>();
     //private int tempNumber = 0;
     public String getShopName() {
         return shopName;
@@ -42,12 +43,12 @@ public class AnimeShop {
         this.toyPrice = toyPrice;
     }
 
-    public ArrayList<AnimeToy> getAnimeToys() {
+    public ArrayList<com.epam.hud.entity.AnimeToy> getAnimeToys() {
         return animeToys;
         //return animeToys.get(animeToys);
     }
 
-    public void setAnimeToys(ArrayList<AnimeToy> animeToys) {
+    public void setAnimeToys(ArrayList<com.epam.hud.entity.AnimeToy> animeToys) {
         this.animeToys = animeToys;
     }
 
@@ -56,7 +57,7 @@ public class AnimeShop {
     }
 
 
-    public void addToy(AnimeToy animeToy) {
+    public void addToy(com.epam.hud.entity.AnimeToy animeToy) {
         /*int tempNumber1 = getTempNumber();
         animeToys[tempNumber1] = animeToy;
         tempNumber1++;
@@ -82,3 +83,4 @@ public class AnimeShop {
                 '}';
     }
 }
+
