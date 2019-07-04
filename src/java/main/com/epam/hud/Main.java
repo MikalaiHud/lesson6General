@@ -4,7 +4,7 @@ package com.epam.hud;
 
 import com.epam.hud.entity.AnimeShop;
 import com.epam.hud.entity.AnimeToy;
-import com.epam.hud.exception.GeneralException;
+import com.epam.hud.exception.AnimeException;
 import com.epam.hud.file.FileWorker;
 import com.epam.hud.logic.ShopContainer;
 
@@ -85,7 +85,7 @@ public class Main {
         shopContainer.printShopArray();
         try {
             shopContainer.getShop(4);
-        } catch (GeneralException e) {
+        } catch (AnimeException e) {
             e.printStackTrace();
         }
 
@@ -100,13 +100,13 @@ public class Main {
         System.out.println("Сейчас программа вылетит");
         try {
             shopContainer.editShopByIndex(0, shop2);
-        } catch (GeneralException e) {
+        } catch (AnimeException e) {
             e.printStackTrace();
         }
         shopContainer.addShop(shop2);
         try {
             shopContainer.editShopByIndex(112, shop0);
-        } catch (GeneralException e) {
+        } catch (AnimeException e) {
             e.printStackTrace();
         }
         shopContainer.printShopArray();
@@ -114,12 +114,12 @@ public class Main {
         System.out.println("Теперь выведем название и адрес выбранного магазина по его номеру в массиве.");
         try {
             shopContainer.printShopNameByIndex(6);
-        } catch (GeneralException e) {
+        } catch (AnimeException e) {
             e.printStackTrace();
         }
         try {
             shopContainer.printShopAddressByIndex(0);
-        } catch (GeneralException e) {
+        } catch (AnimeException e) {
             e.printStackTrace();
         }
         System.out.println("Теперь выведем список всех игрушек во всех магазинах.");

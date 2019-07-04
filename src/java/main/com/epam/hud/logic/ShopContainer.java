@@ -2,7 +2,7 @@ package com.epam.hud.logic;
 
 import com.epam.hud.entity.AnimeShop;
 import com.epam.hud.entity.AnimeToy;
-import com.epam.hud.exception.GeneralException;
+import com.epam.hud.exception.AnimeException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ public class ShopContainer implements Serializable {
         shops.add(shop);
     }
 
-    public void editShopByIndex(int index, AnimeShop newShop) throws GeneralException {
+    public void editShopByIndex(int index, AnimeShop newShop) throws AnimeException {
         if (index < 0 || index > shops.size() - 1) {
-            throw new GeneralException("Попытка отредактировать несуществующий элемент эррей-листа.");
+            throw new AnimeException("Попытка отредактировать несуществующий элемент эррей-листа.");
         }
         shops.set(index, newShop);
     }
@@ -31,9 +31,9 @@ public class ShopContainer implements Serializable {
         return shops;
     }
 
-    public void getShop(int index) throws GeneralException {
+    public void getShop(int index) throws AnimeException {
         if (index > shops.size() - 1) {
-            throw new GeneralException("Попытка заполучить несуществующий элемент эррей-листа.");
+            throw new AnimeException("Попытка заполучить несуществующий элемент эррей-листа.");
         }
         System.out.println("Магазин № " + index + ": " + shops.get(index));
     }
@@ -41,24 +41,24 @@ public class ShopContainer implements Serializable {
     public void printShopArray() {
         System.out.println("-------------------------------------------------");
         System.out.println("Элементы эррей-листа shops");
-        for (int i = 0; i < shops.size(); i++) {
-            System.out.println(i + "-й Элемент: " + shops.get(i));
+        for (AnimeShop shop : shops) {
+            System.out.println(shop);
         }
         System.out.println("-------------------------------------------------");
     }
 
-    public void printShopAddressByIndex(int index) throws GeneralException {
+    public void printShopAddressByIndex(int index) throws AnimeException {
         if (index > shops.size() - 1) {
-            throw new GeneralException("Ппоытка вывести адрес несуществующего магазина.");
+            throw new AnimeException("Ппоытка вывести адрес несуществующего магазина.");
         }
         System.out.println("-------------------------------------------------");
         System.out.println(index + "-й магазин (адрес): " + shops.get(index).getShopAddress());
         System.out.println("-------------------------------------------------");
     }
 
-    public void printShopNameByIndex(int index) throws GeneralException {
+    public void printShopNameByIndex(int index) throws AnimeException {
         if (index > shops.size() - 1) {
-            throw new GeneralException("Ппоытка вывести название несуществуюшего магазина.");
+            throw new AnimeException("Ппоытка вывести название несуществуюшего магазина.");
         }
         System.out.println("-------------------------------------------------");
         System.out.println(index + "-й магазин (название): " + shops.get(index).getShopName());
@@ -68,8 +68,8 @@ public class ShopContainer implements Serializable {
     public void printToyList() {
         System.out.println("-------------------------------------------------");
         System.out.println("Список всех игрушек во всех магазинах:");
-        for (int i = 0; i < shops.size(); i++) {
-            System.out.println(shops.get(i).getAnimeToys());
+        for (AnimeShop shop : shops) {
+            System.out.println(shop.getAnimeToys());
         }
         System.out.println("-------------------------------------------------");
     }
@@ -117,8 +117,8 @@ public class ShopContainer implements Serializable {
 
     public int printGeneralPriceOfToys() {
         int genPrice = 0;
-        for (int i = 0; i < shops.size(); i++) {
-            genPrice += shops.get(i).getToyPrice() * shops.get(i).getNumberOfToys() * shops.get(i).getTempNumber();
+        for (AnimeShop shop : shops) {
+            genPrice += shop.getToyPrice() * shop.getNumberOfToys() * shop.getTempNumber();
         }
         return genPrice;
     }
@@ -141,14 +141,14 @@ public class ShopContainer implements Serializable {
     public double calculatingAveragePriceOfCertainTypeOfToy(String type) {
         double genPrice = 0;
         int number = 0;
-        for (int i = 0; i < shops.size(); i++) {
+        for (AnimeShop shop : shops) {
             int temp = 0;
-            for (int j = 0; j < shops.get(i).getTempNumber(); j++) {
-                if (type.equals(shops.get(i).getAnimeToys().get(j).getToyType())) {
+            for (int j = 0; j < shop.getTempNumber(); j++) {
+                if (type.equals(shop.getAnimeToys().get(j).getToyType())) {
                     temp = 1;
                 }
             }
-            genPrice += shops.get(i).getToyPrice() * temp;
+            genPrice += shop.getToyPrice() * temp;
             if (temp == 1) {
                 number++;
             }
@@ -160,15 +160,15 @@ public class ShopContainer implements Serializable {
     public void printCertainFigure(AnimeToy animeToy) {
         System.out.println("-------------------------------------------------");
         System.out.println("Метод, показывающий магазины, имеющие даную фигурку (" + animeToy + "):");
-        for (int i = 0; i < shops.size(); i++) {
+        for (AnimeShop shop : shops) {
             int trueIndex = 0;
-            for (int j = 0; j < shops.get(i).getTempNumber(); j++) {
-                if (animeToy == shops.get(i).getAnimeToys().get(j)) {
+            for (int j = 0; j < shop.getTempNumber(); j++) {
+                if (animeToy == shop.getAnimeToys().get(j)) {
                     trueIndex = 1;
                 }
             }
             if (trueIndex == 1) {
-                System.out.println("Данная фигурка есть в наличии магазина " + i + ". Её стоимость " + shops.get(i).getToyPrice());
+                System.out.println("Данная фигурка есть в наличии магазина. Её стоимость " + shop.getToyPrice());
             }
         }
         System.out.println("-------------------------------------------------");

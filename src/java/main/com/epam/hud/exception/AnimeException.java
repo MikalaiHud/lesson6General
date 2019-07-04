@@ -1,9 +1,9 @@
 package com.epam.hud.exception;
 
-public class GeneralException extends Exception {
+public class AnimeException extends Exception {
     private String message;
 
-    public GeneralException(String message) {
+    public AnimeException(String message) {
         this.message = message;
     }
 
