@@ -1,11 +1,15 @@
 package com.epam.hud.logic;
 
+import com.epam.hud.entity.AnimeShop;
 import com.epam.hud.entity.AnimeToy;
 import com.epam.hud.exception.GeneralException;
-import com.epam.hud.entity.AnimeShop;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ShopContainer {
+public class ShopContainer implements Serializable {
+
+
     private ArrayList<AnimeShop> shops = new ArrayList<>();
 
     public int getTempShopNumber() {
@@ -20,7 +24,11 @@ public class ShopContainer {
         if (index < 0 || index > shops.size() - 1) {
             throw new GeneralException("Попытка отредактировать несуществующий элемент эррей-листа.");
         }
-        shops.set(index,newShop);
+        shops.set(index, newShop);
+    }
+
+    public ArrayList<AnimeShop> getShops() {
+        return shops;
     }
 
     public void getShop(int index) throws GeneralException {
@@ -98,7 +106,7 @@ public class ShopContainer {
         for (int i = 0; i < shops.size(); i++) {
             System.out.print(i + "-й магазин: ");
             for (int j = 0; j < shops.get(i).getTempNumber(); j++) {
-                if (type.equals(shops.get(i).getAnimeToys().get(j).getToyType())){
+                if (type.equals(shops.get(i).getAnimeToys().get(j).getToyType())) {
                     System.out.print(j + "-я игрушка:" + shops.get(i).getAnimeToys().get(j).getToyName() + " " + shops.get(i).getAnimeToys().get(j).getToyFandom() + "; ");
                 }
             }
@@ -115,7 +123,7 @@ public class ShopContainer {
         return genPrice;
     }
 
-    public void printNamesOfCertainFandomOfToys (String fandom) {
+    public void printNamesOfCertainFandomOfToys(String fandom) {
         System.out.println("-------------------------------------------------");
         System.out.println("Имена фигурок с фэндомом " + fandom + ": ");
         for (int i = 0; i < shops.size(); i++) {
@@ -149,7 +157,7 @@ public class ShopContainer {
         return averagePrice;
     }
 
-    public void printCertainFigure (AnimeToy animeToy) {
+    public void printCertainFigure(AnimeToy animeToy) {
         System.out.println("-------------------------------------------------");
         System.out.println("Метод, показывающий магазины, имеющие даную фигурку (" + animeToy + "):");
         for (int i = 0; i < shops.size(); i++) {

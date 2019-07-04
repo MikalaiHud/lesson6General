@@ -1,6 +1,8 @@
 package com.epam.hud.entity;
 
-public class AnimeToy {
+import java.io.Serializable;
+
+public class AnimeToy implements Serializable {
     private String toyType;
     private String toyFandom;
     private String toyName;

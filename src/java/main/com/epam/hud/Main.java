@@ -1,33 +1,15 @@
 package com.epam.hud;
 
 
-import com.epam.hud.entity.AnimeToy;
-import com.epam.hud.exception.GeneralException;
 
 import com.epam.hud.entity.AnimeShop;
+import com.epam.hud.entity.AnimeToy;
+import com.epam.hud.exception.GeneralException;
+import com.epam.hud.file.FileWorker;
 import com.epam.hud.logic.ShopContainer;
 
-/**
- * 1. В текущей программе заменить массивы на ArrayList
- * 2. Создать свой класс исключений, добавить обработку
- * ошибок(с помощью исключений) в методы
- * 4. Создать ветку task, сделать commit и push в эту ветку.
- * Добавить меня в contributors и сделать pull request
- * 3. Продемонтрировать вариант с некоректными наднными для проверки работы исключений
- * (Пример: цена отрицательная - вырбрасываем exception)
- * 5. Добавить структуру пакетов. (java/main/com.....)
- * logic, entity
- * 6. Удалить пакет example
- */
-
-/**
- * 1. Исправить пакеты(первая строчка программы)
- * 2. Разложить по пакетам. logic и entity поменять местами.
- * 3. Создать пакет exception  для класса GeneralException.
- * 4. Проверить что программа работает корректно.
- * 5. Удалить комментарии
- * 6. git add, git commit -'comment', git push, pull request. Добавить меня в колабораторы.
- */
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -92,17 +74,17 @@ public class Main {
         //В классе ShopContainer создан массив магазинов и прописан метод заполнения этого массива.
         //Для того, чтобы использовать метод заполнения массива, необходимо создать элемент класса ShopContainer.
         //Именно это и происходит далее:
-        ShopContainer shopShop = new ShopContainer();
+        ShopContainer shopContainer = new ShopContainer();
 
 
         //Далее применён метод, прописанный в классе ShopContainer для заполнения массива магазинов, созданных в
         //том же классе.
         System.out.println("Далее применён метод, прописанный в классе ShopContainer для заполнения массива магазинов, созданных//том же классе.");
-        shopShop.addShop(shop0);
-        System.out.println(shopShop.getTempShopNumber());
-        shopShop.printShopArray();
+        shopContainer.addShop(shop0);
+        System.out.println(shopContainer.getTempShopNumber());
+        shopContainer.printShopArray();
         try {
-            shopShop.getShop(4);
+            shopContainer.getShop(4);
         } catch (GeneralException e) {
             e.printStackTrace();
         }
@@ -117,62 +99,81 @@ public class Main {
         shop2.addToy(animeToy1);
         System.out.println("Сейчас программа вылетит");
         try {
-            shopShop.editShopByIndex(0, shop2);
+            shopContainer.editShopByIndex(0, shop2);
         } catch (GeneralException e) {
             e.printStackTrace();
         }
-        shopShop.addShop(shop2);
+        shopContainer.addShop(shop2);
         try {
-            shopShop.editShopByIndex(112, shop0);
+            shopContainer.editShopByIndex(112, shop0);
         } catch (GeneralException e) {
             e.printStackTrace();
         }
-        shopShop.printShopArray();
+        shopContainer.printShopArray();
 
         System.out.println("Теперь выведем название и адрес выбранного магазина по его номеру в массиве.");
         try {
-            shopShop.printShopNameByIndex(6);
+            shopContainer.printShopNameByIndex(6);
         } catch (GeneralException e) {
             e.printStackTrace();
         }
         try {
-            shopShop.printShopAddressByIndex(0);
+            shopContainer.printShopAddressByIndex(0);
         } catch (GeneralException e) {
             e.printStackTrace();
         }
         System.out.println("Теперь выведем список всех игрушек во всех магазинах.");
-        shopShop.printToyList();
+        shopContainer.printToyList();
 
 
         System.out.println("Теперь воспользуемся методом, который выводит фигурки из магазин, где их стоимость наибольшая");
-        shopShop.printToyWithMaxPrice();
-        System.out.println(shopShop.getTempShopNumber());
+        shopContainer.printToyWithMaxPrice();
+        System.out.println(shopContainer.getTempShopNumber());
 
 
         System.out.println("Теперь воспользуемся методом, который выводит фигурки из магазин, где их стоимость наименьшая");
-        shopShop.printToyWithMinPrice();
+        shopContainer.printToyWithMinPrice();
 
         System.out.println("Теперь выведем общую стоимость всего игрового ассортимента:");
-        System.out.println(shopShop.printGeneralPriceOfToys());
+        System.out.println(shopContainer.printGeneralPriceOfToys());
 
         System.out.println("Теперь выведем имена и фэндомы фигурок определённых типов:");
         String editTypeString1 = "Nendoroid";
         String editTypeString2 = "Action figure";
-        shopShop.printNamesAndFnadomsOfCertainTypeOfToys(editTypeString1);
-        shopShop.printNamesAndFnadomsOfCertainTypeOfToys(editTypeString2);
+        shopContainer.printNamesAndFnadomsOfCertainTypeOfToys(editTypeString1);
+        shopContainer.printNamesAndFnadomsOfCertainTypeOfToys(editTypeString2);
 
         System.out.println("Теперь выведем имена фигурок определённого фэендома, количество которых в магазинах больше двух:");
         String editFandomString1 = "One piece";
         String editFandomString2 = "Naruto";
-        shopShop.printNamesOfCertainFandomOfToys(editFandomString1);
-        shopShop.printNamesOfCertainFandomOfToys(editFandomString2);
+        shopContainer.printNamesOfCertainFandomOfToys(editFandomString1);
+        shopContainer.printNamesOfCertainFandomOfToys(editFandomString2);
 
         System.out.println("Теперь выведем на экран среднюю стоимость фигурок определённого типа без учёта их количества:");
-        System.out.println("Тип " + editTypeString1 + " " + shopShop.calculatingAveragePriceOfCertainTypeOfToy(editTypeString1));
-        System.out.println("Тип " + editTypeString2 + " " + shopShop.calculatingAveragePriceOfCertainTypeOfToy(editTypeString2));
+        System.out.println("Тип " + editTypeString1 + " " + shopContainer.calculatingAveragePriceOfCertainTypeOfToy(editTypeString1));
+        System.out.println("Тип " + editTypeString2 + " " + shopContainer.calculatingAveragePriceOfCertainTypeOfToy(editTypeString2));
 
         System.out.println("Теперь воспользуемся методом определения магазинов, в которых продаются определённые фигурки");
-        shopShop.printCertainFigure(animeToy);
-        shopShop.printCertainFigure(animeToy1);
+        shopContainer.printCertainFigure(animeToy);
+        shopContainer.printCertainFigure(animeToy1);
+
+
+        //Теперь попробуем сериализовать-десериализовать объект класса ShopContainer
+        System.out.println("Теперь попробуем сериализовать объект класса ShopContainer");
+        FileWorker fileWorker = new FileWorker();
+        try {
+            fileWorker.writeShops("shopContainer1.txt", shopContainer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<AnimeShop> arrayList = new ArrayList<AnimeShop>();
+        System.out.println("Теперь попробуем десериализовать объект класса ShopContainer");
+        try {
+            arrayList.addAll(fileWorker.readShops("shopContainer1.txt"));
+            System.out.println(arrayList);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

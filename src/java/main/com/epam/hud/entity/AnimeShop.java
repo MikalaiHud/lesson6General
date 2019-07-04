@@ -1,14 +1,15 @@
 package com.epam.hud.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class AnimeShop {
+public class AnimeShop implements Serializable {
     private String shopName;
     private String shopAddress;
     private int numberOfToys;
     private int toyPrice;
-    private ArrayList<com.epam.hud.entity.AnimeToy> animeToys = new ArrayList<>();
+    private ArrayList<AnimeToy> animeToys = new ArrayList<>();
     public String getShopName() {
         return shopName;
     }
@@ -41,11 +42,11 @@ public class AnimeShop {
         this.toyPrice = toyPrice;
     }
 
-    public ArrayList<com.epam.hud.entity.AnimeToy> getAnimeToys() {
+    public ArrayList<AnimeToy> getAnimeToys() {
         return animeToys;
     }
 
-    public void setAnimeToys(ArrayList<com.epam.hud.entity.AnimeToy> animeToys) {
+    public void setAnimeToys(ArrayList<AnimeToy> animeToys) {
         this.animeToys = animeToys;
     }
 
@@ -54,7 +55,7 @@ public class AnimeShop {
     }
 
 
-    public void addToy(com.epam.hud.entity.AnimeToy animeToy) {
+    public void addToy(AnimeToy animeToy) {
         animeToys.add(animeToy);
     }
 
