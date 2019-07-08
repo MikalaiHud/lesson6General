@@ -7,9 +7,8 @@ import java.util.ArrayList;
 public class AnimeShop implements Serializable {
     private String shopName;
     private String shopAddress;
-    private int numberOfToys;
-    private int toyPrice;
     private ArrayList<AnimeToy> animeToys = new ArrayList<>();
+
     public String getShopName() {
         return shopName;
     }
@@ -24,22 +23,6 @@ public class AnimeShop implements Serializable {
 
     public void setShopAddress(String shopAddress) {
         this.shopAddress = shopAddress;
-    }
-
-    public int getNumberOfToys() {
-        return numberOfToys;
-    }
-
-    public void setNumberOfToys(int numberOfToys) {
-        this.numberOfToys = numberOfToys;
-    }
-
-    public int getToyPrice() {
-        return toyPrice;
-    }
-
-    public void setToyPrice(int toyPrice) {
-        this.toyPrice = toyPrice;
     }
 
     public ArrayList<AnimeToy> getAnimeToys() {
@@ -70,8 +53,6 @@ public class AnimeShop implements Serializable {
         return "AnimeShop{" +
                 "shopName='" + shopName + '\'' +
                 ", shopAddress='" + shopAddress + '\'' +
-                ", numberOfToys=" + numberOfToys +
-                ", toyPrice=" + toyPrice +
                 ", animeToys=" + animeToys +
                 ", tempNumber=" + animeToys.size() +
                 '}';

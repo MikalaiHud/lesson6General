@@ -3,23 +3,24 @@ package com.epam.hud.entity;
 import java.io.Serializable;
 
 public class AnimeToy implements Serializable {
-    private String toyType;
-    private String toyFandom;
+    private Type toyType;
+    private Fandom toyFandom;
     private String toyName;
+    private int toyPrice;
 
-    public String getToyType() {
+    public Type getToyType() {
         return toyType;
     }
 
-    public void setToyType(String toyType) {
+    public void setToyType(Type toyType) {
         this.toyType = toyType;
     }
 
-    public String getToyFandom() {
+    public Fandom getToyFandom() {
         return toyFandom;
     }
 
-    public void setToyFandom(String toyFandom) {
+    public void setToyFandom(Fandom toyFandom) {
         this.toyFandom = toyFandom;
     }
 
@@ -31,12 +32,21 @@ public class AnimeToy implements Serializable {
         this.toyName = toyName;
     }
 
+    public int getToyPrice() {
+        return toyPrice;
+    }
+
+    public void setToyPrice(int toyPrice) {
+        this.toyPrice = toyPrice;
+    }
+
     @Override
     public String toString() {
         return "AnimeToy{" +
                 "toyType='" + toyType + '\'' +
                 ", toyFandom='" + toyFandom + '\'' +
                 ", toyName='" + toyName + '\'' +
+                ", toyPrice ='" + toyPrice + '\'' +
                 '}';
     }
 }
