@@ -1,9 +1,9 @@
 package com.epam.hud;
 
-
-
 import com.epam.hud.entity.AnimeShop;
 import com.epam.hud.entity.AnimeToy;
+import com.epam.hud.entity.Fandom;
+import com.epam.hud.entity.Type;
 import com.epam.hud.exception.AnimeException;
 import com.epam.hud.file.FileWorker;
 import com.epam.hud.logic.ShopContainer;
@@ -23,9 +23,10 @@ public class Main {
         //Создание объекта игрушки
 
         AnimeToy animeToy = new AnimeToy();
-        animeToy.setToyFandom("Naruto");
+        animeToy.setToyFandom(Fandom.NARUTO);
         animeToy.setToyName("Uzumaki");
-        animeToy.setToyType("Action figure");
+        animeToy.setToyType(Type.ACTION_FIGURE);
+        animeToy.setToyPrice(20);
         System.out.println(animeToy);
         System.out.println();
 
@@ -37,9 +38,10 @@ public class Main {
         animeShop.printToyArray();
         System.out.println();
         AnimeToy animeToy1 = new AnimeToy();
-        animeToy1.setToyType("Nendoroid");
+        animeToy1.setToyType(Type.ACTION_FIGURE);
         animeToy1.setToyName("Name1");
-        animeToy1.setToyFandom("One piece");
+        animeToy1.setToyFandom(Fandom.ONE_PIECE);
+        animeToy1.setToyPrice(10);
         animeShop.addToy(animeToy1);
         System.out.println(animeToy1);
         System.out.println();
@@ -53,10 +55,8 @@ public class Main {
         //Создание магазина:
         AnimeShop shop0 = new AnimeShop();
         //Задание всех параметров магазина
-        shop0.setNumberOfToys(1);
         shop0.setShopAddress("Московская 4");
         shop0.setShopName("Anime");
-        shop0.setToyPrice(10);
         shop0.addToy(animeToy);
         shop0.addToy(animeToy);
         shop0.addToy(animeToy);
@@ -92,10 +92,8 @@ public class Main {
 
         //Теперь создадим новый магазин с целью использования метода, который заменяет магазин из массива магазинов на указанный новый.
         AnimeShop shop2 = new AnimeShop();
-        shop2.setToyPrice(20);
         shop2.setShopAddress("Washington avenu");
         shop2.setShopName("Japanese");
-        shop2.setNumberOfToys(200);
         shop2.addToy(animeToy1);
         System.out.println("Сейчас программа вылетит");
         try {
@@ -138,14 +136,14 @@ public class Main {
         System.out.println(shopContainer.printGeneralPriceOfToys());
 
         System.out.println("Теперь выведем имена и фэндомы фигурок определённых типов:");
-        String editTypeString1 = "Nendoroid";
-        String editTypeString2 = "Action figure";
+        Type editTypeString1 = Type.NENDOROID;
+        Type editTypeString2 = Type.ACTION_FIGURE;
         shopContainer.printNamesAndFnadomsOfCertainTypeOfToys(editTypeString1);
         shopContainer.printNamesAndFnadomsOfCertainTypeOfToys(editTypeString2);
 
         System.out.println("Теперь выведем имена фигурок определённого фэендома, количество которых в магазинах больше двух:");
-        String editFandomString1 = "One piece";
-        String editFandomString2 = "Naruto";
+        Fandom editFandomString1 = Fandom.ONE_PIECE;
+        Fandom editFandomString2 = Fandom.NARUTO;
         shopContainer.printNamesOfCertainFandomOfToys(editFandomString1);
         shopContainer.printNamesOfCertainFandomOfToys(editFandomString2);
 
@@ -175,5 +173,9 @@ public class Main {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        System.out.println("------------------------------------------------------");
+        System.out.println("Ниже выведен эррей-лист магазинов:");
+        System.out.println(shopContainer.getShops());
     }
 }
