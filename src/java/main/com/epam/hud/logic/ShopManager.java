@@ -24,50 +24,50 @@ public class ShopManager implements Serializable {
 
     private ArrayList<AnimeShop> shops = new ArrayList<>();
 
-    public ArrayList<AnimeShop> getAllShopsFromDB() throws SQLException {
+    public ArrayList<AnimeShop> getAllShopsFromDB() {
         ShopDAO shopDAO = new ShopDAOImpl();
         return shopDAO.readAllShops();
     }
 
-    public int getTempShopNumber() throws SQLException {
+    public int getTempShopNumber() {
         ShopDAO shopDAO = new ShopDAOImpl();
         ArrayList<AnimeShop> shops = shopDAO.readAllShops();
         return shops.size();
     }
 
-    public void addShop(AnimeShop shop) throws SQLException {
+    public void addShop(AnimeShop shop) {
         ShopDAO shopDAO = new ShopDAOImpl();
         shopDAO.createShop(shop);
     }
 
-    public void editShopByIndex(int index, AnimeShop newShop) throws SQLException {
+    public void editShopByIndex(int index, AnimeShop newShop) {
         ShopDAO shopDAO = new ShopDAOImpl();
         shopDAO.updateShop(index, newShop);
     }
 
-    public AnimeShop getShop(int index) throws SQLException {
+    public AnimeShop getShop(int index) {
         ShopDAO shopDAO = new ShopDAOImpl();
         return shopDAO.readShop(index);
     }
 
-    public String getShopAddressById(int id) throws SQLException {
+    public String getShopAddressById(int id) {
         ShopDAO shopDAO = new ShopDAOImpl();
         AnimeShop shop = shopDAO.readShop(id);
         return shop.getShopAddress();
     }
 
-    public String getShopNameById(int id) throws SQLException {
+    public String getShopNameById(int id) {
         ShopDAO shopDAO = new ShopDAOImpl();
         AnimeShop shop = shopDAO.readShop(id);
         return shop.getShopName();
     }
 
-    public ArrayList<AnimeToy> getAllToysFromDB() throws SQLException {
+    public ArrayList<AnimeToy> getAllToysFromDB() {
         ToyDAO toyDAO = new ToyDAOImpl();
         return toyDAO.readAllToys();
     }
 
-    public AnimeToy getToyWithMaxPrice() throws SQLException {
+    public AnimeToy getToyWithMaxPrice() {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> toys = toyDAO.readAllToys();
         int maxPriceId = 0;
@@ -79,7 +79,7 @@ public class ShopManager implements Serializable {
         return toyDAO.readToy(maxPriceId);
     }
 
-    public AnimeToy getToyWithMinPrice() throws SQLException {
+    public AnimeToy getToyWithMinPrice() {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> toys = toyDAO.readAllToys();
         int minPriceId = 0;
@@ -91,7 +91,7 @@ public class ShopManager implements Serializable {
         return toyDAO.readToy(minPriceId);
     }
 
-    public ArrayList<AnimeToy> getNamesAndFandomsOfCertainTypeOfToys(Type type) throws SQLException {
+    public ArrayList<AnimeToy> getNamesAndFandomsOfCertainTypeOfToys(Type type) {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> toys = toyDAO.readAllToys();
         ArrayList<AnimeToy> toys1 = new ArrayList<>();
@@ -103,7 +103,7 @@ public class ShopManager implements Serializable {
         return toys1;
     }
 
-    public int getGeneralPriceOfToys() throws SQLException {
+    public int getGeneralPriceOfToys() {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> toys = toyDAO.readAllToys();
         int genPrice = 0;
@@ -113,7 +113,7 @@ public class ShopManager implements Serializable {
         return genPrice;
     }
 
-    public ArrayList<AnimeToy> getNamesOfCertainFandomOfToys(Fandom fandom) throws SQLException {
+    public ArrayList<AnimeToy> getNamesOfCertainFandomOfToys(Fandom fandom) {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> allToys = toyDAO.readAllToys();
         ArrayList<AnimeToy> toys = new ArrayList<>();
@@ -125,7 +125,7 @@ public class ShopManager implements Serializable {
         return toys;
     }
 
-    public double calculatingAveragePriceOfCertainTypeOfToy(Type type) throws SQLException {
+    public double calculatingAveragePriceOfCertainTypeOfToy(Type type) {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> toys = toyDAO.readAllToys();
         int genPrice = 0;
@@ -136,10 +136,14 @@ public class ShopManager implements Serializable {
                 numberOfSuitableToys++;
             }
         }
-        return genPrice / numberOfSuitableToys;
+        if (numberOfSuitableToys == 0) {
+            return 0;
+        } else {
+            return genPrice / numberOfSuitableToys;
+        }
     }
 
-    public ArrayList<AnimeToy> getCertainFigures(AnimeToy animeToy) throws SQLException {
+    public ArrayList<AnimeToy> getCertainFigures(AnimeToy animeToy) {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> allToys = toyDAO.readAllToys();
         ArrayList<AnimeToy> toys = new ArrayList<>();
@@ -151,7 +155,7 @@ public class ShopManager implements Serializable {
         return toys;
     }
 
-    public ArrayList<AnimeShop> getCertainShops(AnimeShop animeShop) throws SQLException {
+    public ArrayList<AnimeShop> getCertainShops(AnimeShop animeShop) {
         ShopDAO shopDAO = new ShopDAOImpl();
         ArrayList<AnimeShop> allShops = shopDAO.readAllShops();
         ArrayList<AnimeShop> shops = new ArrayList<>();
@@ -163,7 +167,7 @@ public class ShopManager implements Serializable {
         return shops;
     }
 
-    public ArrayList<AnimeToy> getAllToysFromDBByShopId(int shopId) throws SQLException {
+    public ArrayList<AnimeToy> getAllToysFromDBByShopId(int shopId) {
         ToyDAOImpl tdi = new ToyDAOImpl();
         ArrayList<AnimeToy> allToys = tdi.readAllToys();
         ArrayList<AnimeToy> toys = new ArrayList<>();

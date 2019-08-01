@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface ToyDAO {
-    void createToy(AnimeToy animeToy) throws SQLException;
+    void createToy(AnimeToy animeToy);
 
-    AnimeToy readToy(int id) throws SQLException;
+    AnimeToy readToy(int id);
 
-    void updateToy(int id, AnimeToy animeToy) throws SQLException;
+    void updateToy(int id, AnimeToy animeToy);
 
-    void deleteToy(int id) throws SQLException;
+    void deleteToy(int id);
 
-    ArrayList<AnimeToy> readAllToys() throws SQLException;
+    ArrayList<AnimeToy> readAllToys();
 
 }

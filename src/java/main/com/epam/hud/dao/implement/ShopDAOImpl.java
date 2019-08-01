@@ -16,68 +16,146 @@ public class ShopDAOImpl implements ShopDAO {
     private final String DELETE_SHOP = "DELETE from anime.shops where id=?";
     private final String READ_ALL_SHOPS = "SELECT * from anime.shops";
 
+    // TODO: Прочитать про try/ try-with resources.
     @Override
-    public void createShop(AnimeShop animeShop) throws SQLException {
+    public void createShop(AnimeShop animeShop) {
         Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement statement = connection.prepareStatement(CREATE_SHOP);
-        statement.setString(1, animeShop.getShopName());
-        statement.setString(2, animeShop.getShopAddress());
-        statement.executeUpdate();
-        connection.close();
-    }
-
-
-    public AnimeShop readShop(int id) throws SQLException {
-        AnimeShop shop = new AnimeShop(); // Making object of class AnomeShop to set necessary data there.
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement statement = connection.prepareStatement(READ_SHOP); //
-        statement.setInt(1, id);
-        final ResultSet rs = statement.executeQuery();
-        if (rs.next()) {
-            shop.setId(rs.getInt("id"));
-            ToyDAOImpl toyDAO = new ToyDAOImpl();
-            shop.setAnimeToys(toyDAO.readAllToysByShopId(shop.getId()));
-            shop.setShopAddress(rs.getString("address"));
-            shop.setShopName(rs.getString("name"));
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(CREATE_SHOP);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        connection.close();
-        return shop;
+        try {
+            statement.setString(1, animeShop.getShopName());
+            statement.setString(2, animeShop.getShopAddress());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    @Override
-    public void updateShop(int id, AnimeShop animeShop) throws SQLException {
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement statement = connection.prepareStatement(UPDATE_SHOP);
-        statement.setString(1, animeShop.getShopName());
-        statement.setString(2, animeShop.getShopAddress());
-        statement.setInt(3, id);
-        statement.executeUpdate();
 
-    }
-
-    @Override
-    public void deleteShop(int id) throws SQLException {
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement statement = connection.prepareStatement(DELETE_SHOP);
-        statement.setInt(1, id);
-        statement.executeUpdate();
-    }
-
-    @Override
-    public ArrayList<AnimeShop> readAllShops() throws SQLException {
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        ArrayList<AnimeShop> shops = new ArrayList<AnimeShop>();
-        PreparedStatement statement = connection.prepareStatement(READ_ALL_SHOPS);
-        final ResultSet rs = statement.executeQuery();
-        while (rs.next()) {
+        public AnimeShop readShop ( int id) {
             AnimeShop shop = new AnimeShop();
-            ToyDAOImpl tdi = new ToyDAOImpl();
-            shop.setId(rs.getInt("id"));
-            shop.setShopAddress(rs.getString("address"));
-            shop.setShopName(rs.getString("name"));
-            shop.setAnimeToys(tdi.readAllToysByShopId(shop.getId()));
-            shops.add(shop);
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement(READ_SHOP);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                statement.setInt(1, id);
+                final ResultSet rs = statement.executeQuery();
+                if (rs.next()) {
+                    shop.setId(rs.getInt("id"));
+                    ToyDAOImpl toyDAO = new ToyDAOImpl();
+                    shop.setAnimeToys(toyDAO.readAllToysByShopId(shop.getId()));
+                    shop.setShopAddress(rs.getString("address"));
+                    shop.setShopName(rs.getString("name"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    connection.close();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            return shop;
         }
-        return shops;
+
+        @Override
+        public void updateShop ( int id, AnimeShop animeShop)  {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement(UPDATE_SHOP);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                statement.setString(1, animeShop.getShopName());
+                statement.setString(2, animeShop.getShopAddress());
+                statement.setInt(3, id);
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    connection.close();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void deleteShop ( int id)  {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement(DELETE_SHOP);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    connection.close();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public ArrayList<AnimeShop> readAllShops ()  {
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            ArrayList<AnimeShop> shops = new ArrayList<AnimeShop>();
+            PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement(READ_ALL_SHOPS);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                final ResultSet rs = statement.executeQuery();
+                while (rs.next()) {
+                    AnimeShop shop = new AnimeShop();
+                    ToyDAOImpl tdi = new ToyDAOImpl();
+                    shop.setId(rs.getInt("id"));
+                    shop.setShopAddress(rs.getString("address"));
+                    shop.setShopName(rs.getString("name"));
+                    shop.setAnimeToys(tdi.readAllToysByShopId(shop.getId()));
+                    shops.add(shop);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    connection.close();
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            return shops;
+        }
     }
-}

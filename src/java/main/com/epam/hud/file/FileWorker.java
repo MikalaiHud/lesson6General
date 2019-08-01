@@ -22,7 +22,6 @@ public class FileWorker implements Serializable {
         ShopManager shopContainer = (ShopManager) ois.readObject();
         ois.close();
         fis.close();
-        //shopContainer.getShops();
         return null;
     }
 }
