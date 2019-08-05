@@ -77,12 +77,13 @@ public class ToyGenerators {
         return random;
     }
 
-    public AnimeToy generateRandomToy() {
+    public AnimeToy generateRandomToy(int shopId) {
         AnimeToy toy = new AnimeToy();
         toy.setToyFandom(generateRandomToyFandom());
         toy.setToyPrice(generateRandomToyPrice());
         toy.setToyName(generateRandomToyName());
         toy.setToyType(generateRandomToyType());
+        toy.setShopId(shopId);
         return toy;
     }
 }

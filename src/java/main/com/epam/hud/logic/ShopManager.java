@@ -1,21 +1,15 @@
 package com.epam.hud.logic;
 
-import com.epam.hud.dao.db.ConnectionPool;
 import com.epam.hud.dao.entity.AnimeShop;
 import com.epam.hud.dao.entity.AnimeToy;
 import com.epam.hud.dao.implement.ShopDAOImpl;
 import com.epam.hud.dao.implement.ToyDAOImpl;
 import com.epam.hud.dao.interfaces.ShopDAO;
 import com.epam.hud.dao.interfaces.ToyDAO;
-import com.epam.hud.exception.AnimeException;
 import com.epam.hud.dao.entity.Type;
 import com.epam.hud.dao.entity.Fandom;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -24,7 +18,7 @@ public class ShopManager implements Serializable {
 
     private ArrayList<AnimeShop> shops = new ArrayList<>();
 
-    public ArrayList<AnimeShop> getAllShopsFromDB() {
+    public ArrayList<AnimeShop> getAllShops() {
         ShopDAO shopDAO = new ShopDAOImpl();
         return shopDAO.readAllShops();
     }
@@ -62,30 +56,30 @@ public class ShopManager implements Serializable {
         return shop.getShopName();
     }
 
-    public ArrayList<AnimeToy> getAllToysFromDB() {
+    public ArrayList<AnimeToy> getAllToys() {
         ToyDAO toyDAO = new ToyDAOImpl();
         return toyDAO.readAllToys();
     }
 
-    public AnimeToy getToyWithMaxPrice() {
+    public AnimeToy expensiveToy() {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> toys = toyDAO.readAllToys();
         int maxPriceId = 0;
         for (int i = 0; i < toys.size(); i++) {
             if (toys.get(i).getToyPrice() > maxPriceId) {
-                maxPriceId = i;
+                maxPriceId = toys.get(i).getId();
             }
         }
         return toyDAO.readToy(maxPriceId);
     }
 
-    public AnimeToy getToyWithMinPrice() {
+    public AnimeToy cheapToy() {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> toys = toyDAO.readAllToys();
         int minPriceId = 0;
         for (int i = 0; i < toys.size(); i++) {
             if (toys.get(i).getToyPrice() > minPriceId) {
-                minPriceId = i;
+                minPriceId = toys.get(i).getId();
             }
         }
         return toyDAO.readToy(minPriceId);
@@ -103,7 +97,7 @@ public class ShopManager implements Serializable {
         return toys1;
     }
 
-    public int getGeneralPriceOfToys() {
+    public int toyGenPrice() {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> toys = toyDAO.readAllToys();
         int genPrice = 0;
@@ -125,7 +119,7 @@ public class ShopManager implements Serializable {
         return toys;
     }
 
-    public double calculatingAveragePriceOfCertainTypeOfToy(Type type) {
+    public double toyTypeAveragePrice(Type type) {
         ToyDAO toyDAO = new ToyDAOImpl();
         ArrayList<AnimeToy> toys = toyDAO.readAllToys();
         int genPrice = 0;
@@ -167,7 +161,7 @@ public class ShopManager implements Serializable {
         return shops;
     }
 
-    public ArrayList<AnimeToy> getAllToysFromDBByShopId(int shopId) {
+    public ArrayList<AnimeToy> getToysByShopId(int shopId) {
         ToyDAOImpl tdi = new ToyDAOImpl();
         ArrayList<AnimeToy> allToys = tdi.readAllToys();
         ArrayList<AnimeToy> toys = new ArrayList<>();

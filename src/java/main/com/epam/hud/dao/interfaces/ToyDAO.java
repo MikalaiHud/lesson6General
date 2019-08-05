@@ -2,7 +2,6 @@ package com.epam.hud.dao.interfaces;
 
 import com.epam.hud.dao.entity.AnimeToy;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface ToyDAO {
