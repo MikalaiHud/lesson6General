@@ -1,5 +1,5 @@
-package com.epam.hud.entity;
-//Completed model, Action figure, Nendoroid, Trading Figure, Game Prize, Garage Kits
+package com.epam.hud.dao.entity;
+
 public enum Type {
     ACTION_FIGURE,
     NENDOROID,

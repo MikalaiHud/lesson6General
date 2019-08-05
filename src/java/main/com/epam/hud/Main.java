@@ -1,181 +1,84 @@
 package com.epam.hud;
 
-import com.epam.hud.entity.AnimeShop;
-import com.epam.hud.entity.AnimeToy;
-import com.epam.hud.entity.Fandom;
-import com.epam.hud.entity.Type;
-import com.epam.hud.exception.AnimeException;
-import com.epam.hud.file.FileWorker;
-import com.epam.hud.logic.ShopContainer;
-
-import java.io.IOException;
-import java.util.ArrayList;
+import com.epam.hud.dao.entity.AnimeShop;
+import com.epam.hud.dao.entity.AnimeToy;
+import com.epam.hud.dao.implement.ShopDAOImpl;
+import com.epam.hud.dao.implement.ToyDAOImpl;
+import com.epam.hud.generators.ShopGenerators;
+import com.epam.hud.generators.ToyGenerators;
+import com.epam.hud.logic.ShopManager;
 
 public class Main {
     public static void main(String[] args) {
-        //Ниже приведён код, выводящий вначале новый эелемент, а потом сам массив. (Размер массива равен 10. Метод
-        //по расширению массива ещё не прописан.)Здесь в массив добавлено 2 элемента.
-        System.out.println("Ниже приведён код, выводящий вначале новый эелемент, а потом сам массив. Здесь в массив добавлено 2 элемента.");
-
-        //Здесь создаётся объект магазин и объекты игрушки. Операции над магазином прописаны в классе AnimeShop, потому
-        //необходимо создать объект данного класса. В игрушке лишь задаются параметры, а посему для описания параметров хватит объектра
-        //класса AnimeToy.
-        //Создание объекта игрушки
-
-        AnimeToy animeToy = new AnimeToy();
-        animeToy.setToyFandom(Fandom.NARUTO);
-        animeToy.setToyName("Uzumaki");
-        animeToy.setToyType(Type.ACTION_FIGURE);
-        animeToy.setToyPrice(20);
-        System.out.println(animeToy);
+        System.out.println("Work with DB");
         System.out.println();
 
-        //Создание объекта магазин для использования метода класса AnimeToy.
-        AnimeShop animeShop = new AnimeShop();
+        ToyDAOImpl tdi = new ToyDAOImpl();
+        ShopDAOImpl sdi = new ShopDAOImpl();
+        ShopGenerators sg = new ShopGenerators();
+        ToyGenerators tg = new ToyGenerators();
 
-        //Игрушка записывается в массив, созданный в классе AnimeShop:
-        animeShop.addToy(animeToy);
-        animeShop.printToyArray();
-        System.out.println();
-        AnimeToy animeToy1 = new AnimeToy();
-        animeToy1.setToyType(Type.ACTION_FIGURE);
-        animeToy1.setToyName("Name1");
-        animeToy1.setToyFandom(Fandom.ONE_PIECE);
-        animeToy1.setToyPrice(10);
-        animeShop.addToy(animeToy1);
-        System.out.println(animeToy1);
-        System.out.println();
-        animeShop.printToyArray();
+        AnimeShop shop1 = sg.generateRandomShop();
+        System.out.println("generated shop:");
+        System.out.println(shop1);
+        AnimeToy toy1 = tg.generateRandomToy(sdi.readAllShops().get(0).getId());
+        System.out.println("generated toy");
+        System.out.println(toy1);
         System.out.println();
 
-
-        //Далее приведён код, создающий и выводящий магазины аниме-игрушек. Здесь задаются лишь
-        //названия магазинов и их адреса. Всего взято 2 магазина.
-        System.out.println("Далее приведён код, создающий и выводящий магазины аниме-игрушек.");
-        //Создание магазина:
-        AnimeShop shop0 = new AnimeShop();
-        //Задание всех параметров магазина
-        shop0.setShopAddress("Московская 4");
-        shop0.setShopName("Anime");
-        shop0.addToy(animeToy);
-        shop0.addToy(animeToy);
-        shop0.addToy(animeToy);
-        shop0.addToy(animeToy);
-        shop0.addToy(animeToy1);
-        shop0.addToy(animeToy);
-        shop0.addToy(animeToy);
-        shop0.addToy(animeToy);
-        shop0.addToy(animeToy);
-        shop0.addToy(animeToy1);
-        System.out.println(shop0);
+        System.out.println("ShopDAOImpl check");
+        sdi.createShop(shop1);
+        sdi.updateShop(31, shop1);
+        sdi.deleteShop(120);
+        System.out.println("shop 150:");
+        System.out.println(sdi.readShop(150));
+        System.out.println("all shops:");
+        System.out.println(sdi.readAllShops());
+        System.out.println("ToyDAOImpl check");
+        tdi.createToy(toy1);
+        tdi.updateToy(20, toy1);
+        tdi.deleteToy(20);
+        System.out.println("toy 21:");
+        System.out.println(tdi.readToy(21));
+        System.out.println("all toys:");
+        System.out.println(tdi.readAllToys());
         System.out.println();
 
-
-        //В классе ShopContainer создан массив магазинов и прописан метод заполнения этого массива.
-        //Для того, чтобы использовать метод заполнения массива, необходимо создать элемент класса ShopContainer.
-        //Именно это и происходит далее:
-        ShopContainer shopContainer = new ShopContainer();
-
-
-        //Далее применён метод, прописанный в классе ShopContainer для заполнения массива магазинов, созданных в
-        //том же классе.
-        System.out.println("Далее применён метод, прописанный в классе ShopContainer для заполнения массива магазинов, созданных//том же классе.");
-        shopContainer.addShop(shop0);
-        System.out.println(shopContainer.getTempShopNumber());
-        shopContainer.printShopArray();
-        try {
-            shopContainer.getShop(4);
-        } catch (AnimeException e) {
-            e.printStackTrace();
-        }
-
-
-        //Теперь создадим новый магазин с целью использования метода, который заменяет магазин из массива магазинов на указанный новый.
-        AnimeShop shop2 = new AnimeShop();
-        shop2.setShopAddress("Washington avenu");
-        shop2.setShopName("Japanese");
-        shop2.addToy(animeToy1);
-        System.out.println("Сейчас программа вылетит");
-        try {
-            shopContainer.editShopByIndex(0, shop2);
-        } catch (AnimeException e) {
-            e.printStackTrace();
-        }
-        shopContainer.addShop(shop2);
-        try {
-            shopContainer.editShopByIndex(112, shop0);
-        } catch (AnimeException e) {
-            e.printStackTrace();
-        }
-        shopContainer.printShopArray();
-
-        System.out.println("Теперь выведем название и адрес выбранного магазина по его номеру в массиве.");
-        try {
-            shopContainer.printShopNameByIndex(6);
-        } catch (AnimeException e) {
-            e.printStackTrace();
-        }
-        try {
-            shopContainer.printShopAddressByIndex(0);
-        } catch (AnimeException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Теперь выведем список всех игрушек во всех магазинах.");
-        shopContainer.printToyList();
-
-
-        System.out.println("Теперь воспользуемся методом, который выводит фигурки из магазин, где их стоимость наибольшая");
-        shopContainer.printToyWithMaxPrice();
-        System.out.println(shopContainer.getTempShopNumber());
-
-
-        System.out.println("Теперь воспользуемся методом, который выводит фигурки из магазин, где их стоимость наименьшая");
-        shopContainer.printToyWithMinPrice();
-
-        System.out.println("Теперь выведем общую стоимость всего игрового ассортимента:");
-        System.out.println(shopContainer.printGeneralPriceOfToys());
-
-        System.out.println("Теперь выведем имена и фэндомы фигурок определённых типов:");
-        Type editTypeString1 = Type.NENDOROID;
-        Type editTypeString2 = Type.ACTION_FIGURE;
-        shopContainer.printNamesAndFnadomsOfCertainTypeOfToys(editTypeString1);
-        shopContainer.printNamesAndFnadomsOfCertainTypeOfToys(editTypeString2);
-
-        System.out.println("Теперь выведем имена фигурок определённого фэендома, количество которых в магазинах больше двух:");
-        Fandom editFandomString1 = Fandom.ONE_PIECE;
-        Fandom editFandomString2 = Fandom.NARUTO;
-        shopContainer.printNamesOfCertainFandomOfToys(editFandomString1);
-        shopContainer.printNamesOfCertainFandomOfToys(editFandomString2);
-
-        System.out.println("Теперь выведем на экран среднюю стоимость фигурок определённого типа без учёта их количества:");
-        System.out.println("Тип " + editTypeString1 + " " + shopContainer.calculatingAveragePriceOfCertainTypeOfToy(editTypeString1));
-        System.out.println("Тип " + editTypeString2 + " " + shopContainer.calculatingAveragePriceOfCertainTypeOfToy(editTypeString2));
-
-        System.out.println("Теперь воспользуемся методом определения магазинов, в которых продаются определённые фигурки");
-        shopContainer.printCertainFigure(animeToy);
-        shopContainer.printCertainFigure(animeToy1);
-
-
-        //Теперь попробуем сериализовать-десериализовать объект класса ShopContainer
-        System.out.println("Теперь попробуем сериализовать объект класса ShopContainer");
-        FileWorker fileWorker = new FileWorker();
-        try {
-            fileWorker.writeShops("shopContainer1.txt", shopContainer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ArrayList<AnimeShop> arrayList = new ArrayList<AnimeShop>();
-        System.out.println("Теперь попробуем десериализовать объект класса ShopContainer");
-        try {
-            arrayList.addAll(fileWorker.readShops("shopContainer1.txt"));
-            System.out.println(arrayList);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("------------------------------------------------------");
-        System.out.println("Ниже выведен эррей-лист магазинов:");
-        System.out.println(shopContainer.getShops());
+        System.out.println("ShopManager check");
+        ShopManager sm = new ShopManager();
+        System.out.println("All shops:");
+        System.out.println(sm.getAllShops());
+        sm.addShop(shop1);
+        sm.editShopByIndex(50, shop1);
+        System.out.println("toyTypeAveragePrice");
+        System.out.println(sm.toyTypeAveragePrice(toy1.getToyType()));
+        System.out.println("getAllShops");
+        System.out.println(sm.getAllShops());
+        System.out.println("getAllToys");
+        System.out.println(sm.getAllToys());
+        System.out.println("getCertainFigures");
+        System.out.println(sm.getCertainFigures(toy1));
+        System.out.println("getCertainShops");
+        System.out.println(sm.getCertainShops(shop1));
+        System.out.println("toyGenPrice");
+        System.out.println(sm.toyGenPrice());
+        System.out.println("getNamesAndFandomsOfCertainTypeOfToys");
+        System.out.println(sm.getNamesAndFandomsOfCertainTypeOfToys(toy1.getToyType()));
+        System.out.println("getNamesOfCertainFandomOfToys");
+        System.out.println(sm.getNamesOfCertainFandomOfToys(toy1.getToyFandom()));
+        System.out.println("getShopAddressById");
+        System.out.println(sm.getShopAddressById(50));
+        System.out.println("getShopNameById");
+        System.out.println(sm.getShopNameById(50));
+        System.out.println("getTempShopNumber");
+        System.out.println(sm.getTempShopNumber());
+        System.out.println("expensiveToy");
+        System.out.println(sm.expensiveToy());
+        System.out.println("cheapToy");
+        System.out.println(sm.cheapToy());
+        System.out.println("getToysByShopId");
+        System.out.println(sm.getToysByShopId(19));
+        System.out.println("getShop");
+        System.out.println(sm.getShop(50));
     }
 }

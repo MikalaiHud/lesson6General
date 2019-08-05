@@ -1,6 +1,5 @@
-package com.epam.hud.entity;
+package com.epam.hud.dao.entity;
 
-//Naruto, Bleach, One Piece, Black Butler, Tokyo Ghoul, Gintama, Fairy Tail, Attack on Titan и др.
 public enum Fandom {
     NARUTO,
     BLEACH,

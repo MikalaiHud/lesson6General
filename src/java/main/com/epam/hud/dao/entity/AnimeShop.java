@@ -1,13 +1,33 @@
-package com.epam.hud.entity;
+package com.epam.hud.dao.entity;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class AnimeShop implements Serializable {
+    private int id;
     private String shopName;
     private String shopAddress;
     private ArrayList<AnimeToy> animeToys = new ArrayList<>();
+
+    public AnimeShop(int id, String shopName, String shopAddress, ArrayList<AnimeToy> animeToys) {
+        this.id = id;
+        this.shopName = shopName;
+        this.shopAddress = shopAddress;
+        this.animeToys = animeToys;
+    }
+
+    public AnimeShop() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getShopName() {
         return shopName;
@@ -48,14 +68,16 @@ public class AnimeShop implements Serializable {
         }
     }
 
+
     @Override
     public String toString() {
         return "AnimeShop{" +
-                "shopName='" + shopName + '\'' +
+                "id=" + id +
+                ", shopName='" + shopName + '\'' +
                 ", shopAddress='" + shopAddress + '\'' +
                 ", animeToys=" + animeToys +
-                ", tempNumber=" + animeToys.size() +
                 '}';
     }
+
 }
 
